@@ -3,9 +3,9 @@
    ========================================================================== */
 const CONFIG = {
   // International format, digits only, no "+" or spaces. Example: "966512345678"
-  whatsapp: "966500000000",
-  whatsappDisplay: "+966 50 000 0000",
-  email: "you@example.com",
+  whatsapp: "966501256196",
+  whatsappDisplay: "+966 50 125 6196",
+  email: "salokhiddinrahmatjonov@gmail.com",
   // Pre-filled text when someone taps a WhatsApp button
   whatsappGreeting: "Hi Salokh! I found your website and I'd like to talk about a project.",
 };
