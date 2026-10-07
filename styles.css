@@ -358,15 +358,9 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
 /* Contact */
 .section--contact { background: linear-gradient(180deg, transparent, var(--bg-2)); }
 .contact { display: grid; gap: 40px; }
-.contact__direct { margin-top: 32px; display: grid; gap: 10px; }
-.contact__link {
-  display: flex; flex-direction: column; gap: 2px;
-  padding: 16px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm);
-  background: var(--surface); transition: border-color 0.2s;
-}
-.contact__link:hover { border-color: var(--accent-line); }
-.contact__label { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
-.contact__value { font-weight: 500; overflow-wrap: anywhere; }
+.contact__direct { margin-top: 32px; display: flex; flex-direction: column; gap: 10px; }
+.btn svg.i-line { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+@media (min-width: 520px) { .contact__direct { flex-direction: row; flex-wrap: wrap; } }
 
 .form { padding: 24px; display: grid; gap: 18px; }
 .field { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; min-width: 0; }

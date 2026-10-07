@@ -2,10 +2,10 @@
    YOUR DETAILS: edit these and every link on the page updates.
    ========================================================================== */
 const CONFIG = {
-  // International format, digits only, no "+" or spaces. Example: "966512345678"
-  whatsapp: "966501256196",
-  whatsappDisplay: "+966 50 125 6196",
-  email: "salokhiddinrahmatjonov@gmail.com",
+  // Kept in pieces so bots scanning the page for numbers/emails don't pick them up.
+  // WhatsApp: international format, digits only (country code + number without the leading 0).
+  whatsapp: ["966", "50125", "6196"].join(""),
+  email: ["salokhiddinrahmatjonov", "gmail.com"].join("@"),
   // Pre-filled text when someone taps a WhatsApp button
   whatsappGreeting: "Hi Salokh! I found your website and I'd like to talk about a project.",
 };
@@ -19,8 +19,6 @@ const waLink = (text) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURICompo
 // ---- Contact links ----------------------------------------------------------
 $$(".js-whatsapp").forEach((a) => (a.href = waLink(CONFIG.whatsappGreeting)));
 $$(".js-email").forEach((a) => (a.href = `mailto:${CONFIG.email}`));
-$$(".js-whatsapp-display").forEach((el) => (el.textContent = CONFIG.whatsappDisplay));
-$$(".js-email-display").forEach((el) => (el.textContent = CONFIG.email));
 $("#year").textContent = new Date().getFullYear();
 
 // ---- Theme toggle -----------------------------------------------------------
