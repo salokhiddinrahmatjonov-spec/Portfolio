@@ -3,7 +3,7 @@
 Static single-page site (HTML + CSS + JS, no build step).
 
 ## Edit
-- **Contact details:** the `CONFIG` block at the top of `script.js` (WhatsApp number, email, greeting).
+- **Contact details:** the `CONFIG` block at the top of `script.js` (WhatsApp number, email). The WhatsApp greeting is in `i18n.js` (`js.greeting`).
 - **Projects:** the `#work` section in `index.html`. Replace each `.project__thumb` placeholder with an `<img>`.
 - **Text / translations:** English is in `index.html`; Arabic and Uzbek are in `i18n.js` under the same keys (`data-i18n="..."`). Link to a language directly with `?lang=ar` or `?lang=uz`.
 - **Accent color:** `--accent` in `styles.css` (dark and light theme blocks).
