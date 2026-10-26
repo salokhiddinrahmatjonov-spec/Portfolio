@@ -6,18 +6,20 @@ const CONFIG = {
   // WhatsApp: international format, digits only (country code + number without the leading 0).
   whatsapp: ["966", "50125", "6196"].join(""),
   email: ["salokhiddinrahmatjonov", "gmail.com"].join("@"),
-  // Pre-filled text when someone taps a WhatsApp button
-  whatsappGreeting: "Hi Salokh! I found your website and I'd like to talk about a project.",
+  // The pre-filled WhatsApp greeting is in i18n.js ("js.greeting"), one per language.
 };
 
 /* ========================================================================== */
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const t = (id, vars) => window.i18n.t(id, vars);
 const waLink = (text) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
 
 // ---- Contact links ----------------------------------------------------------
-$$(".js-whatsapp").forEach((a) => (a.href = waLink(CONFIG.whatsappGreeting)));
+const setWhatsAppLinks = () => $$(".js-whatsapp").forEach((a) => (a.href = waLink(t("js.greeting"))));
+setWhatsAppLinks();
+document.addEventListener("langchange", setWhatsAppLinks);
 $$(".js-email").forEach((a) => (a.href = `mailto:${CONFIG.email}`));
 $("#year").textContent = new Date().getFullYear();
 
@@ -45,11 +47,13 @@ onScroll();
 const setMenu = (open) => {
   nav.classList.toggle("is-open", open);
   burger.setAttribute("aria-expanded", String(open));
-  burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  burger.setAttribute("aria-label", t(open ? "js.menuClose" : "js.menuOpen"));
 };
 burger.addEventListener("click", () => setMenu(!nav.classList.contains("is-open")));
 $$("#nav-links a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
 document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
+document.addEventListener("langchange", () => setMenu(false));
+setMenu(false);
 
 const navLinks = $$('.nav__links a[href^="#"]:not(.btn)');
 const sectionObserver = new IntersectionObserver(
@@ -111,7 +115,8 @@ form.addEventListener("submit", (e) => {
   const name = data.get("name").trim();
   const business = data.get("business").trim();
   const message = data.get("message").trim();
-  const services = data.getAll("service");
+  // Use the visible (translated) chip labels in the message
+  const services = $$('input[name="service"]:checked', form).map((i) => i.nextElementSibling.textContent.trim());
 
   $("#f-name").setAttribute("aria-invalid", String(!name));
   $("#f-msg").setAttribute("aria-invalid", String(!message));
@@ -122,13 +127,13 @@ form.addEventListener("submit", (e) => {
   }
   errorEl.hidden = true;
 
-  const lines = [`Hi Salokh, I'm ${name}${business ? ` from ${business}` : ""}.`];
-  if (services.length) lines.push(`Interested in: ${services.join(", ")}`);
+  const lines = [t("js.intro", { name, business: business ? t("js.from", { business }) : "" })];
+  if (services.length) lines.push(t("js.interested", { list: services.join(window.i18n.lang === "ar" ? "، " : ", ") }));
   lines.push("", message);
   const text = lines.join("\n");
 
   if (e.submitter?.dataset.channel === "email") {
-    const subject = `Project enquiry${business ? ` — ${business}` : ""}`;
+    const subject = `${t("js.subject")}${business ? ` — ${business}` : ""}`;
     window.location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
   } else {
     window.open(waLink(text), "_blank", "noopener");
